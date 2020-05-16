@@ -1,0 +1,23 @@
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+.history
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
