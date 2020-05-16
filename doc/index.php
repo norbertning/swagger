@@ -28,8 +28,10 @@ if (empty($classMap)) {
 }
 foreach ($classMap as $className => $item) {
     $items = [];
-    if (!is_array($item)) {
-        $items = [$item];
+    if (is_array($item)) {
+        $items = array_merge($items, $item);
+    } else {
+        $items = array_merge($items, [$item]);
     }
     foreach ($items as $item) {
         $doc = new SwaggerFileDoc($item);
@@ -45,6 +47,15 @@ foreach ($classMap as $className => $item) {
 
 $swaggerList["tags"] = $tags;
 $swaggerList["paths"] = $paths;
+
+// 生成swagger.json需要的格式，用于swagger-bootstrap-ui-front使用
+$result =  $swaggerList;
+unset($result['tags']);
+$myFile = fopen(BASE_PATH . "web/swagger-ui/json/swagger_api.json", "w");
+fwrite($myFile, json_encode($result));
+fclose($myFile);
+
+// 输出给yapi使用
 header("Content-type: application/json");
 echo json_encode($swaggerList);
 exit;

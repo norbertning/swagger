@@ -8,7 +8,6 @@ require __DIR__ . '/Parsedown.php';
  * 接口文档解析
  *
  * @author ningyuanhuo@163.com
- * @date 2020.04.21
  */
 class SwaggerFileDoc
 {
@@ -41,7 +40,7 @@ class SwaggerFileDoc
         }
         $this->filePath = $filePath;
         $this->file = $file;
-        $controller = strtolower(substr($file, strpos($file, 'controllers/') + strlen('controllers/'), -14)) . '/';
+        $controller = strtolower(substr($file, strpos($file, 'controllers/') + strlen('controllers/'), -4)) . '/';
         $this->apiBaseUrl = $controller;
         $this->parse();
     }
@@ -154,9 +153,9 @@ class SwaggerFileDoc
                 $this->getMethodMd($methodDoc, $swagger);
                 // 处理方法名
                 $name = lcfirst(str_replace('action', '', $methodDoc->getName()));
-                $path = $this->apiBaseUrl == '/' ? $name : "/" . $this->apiBaseUrl . $name;
+                $path = $this->apiBaseUrl == '/' ? $name : $this->apiBaseUrl . $name;
+                $path = "/" . $path;
                 $swaggerList[$path] = $swagger;
-
             }
         }
 

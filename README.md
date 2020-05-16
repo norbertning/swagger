@@ -46,13 +46,13 @@
  *  - page_size | int | 分页大小 | 20 | N
  *  - search | json | 搜索条件,JSON结构 | {}
  * @response
- * {"code":0,"msg":"success","rows":{"total":21,"list":[{"id":"26","name":"test2111122","adset_ids":"6079221400617,6079255333417","created_time":1504680751,"spend":119,"installs":279,"cpi":0.42652329749104},{"id":"25","name":"test21111","adset_ids":"6079221400617,6079255333417","created_time":1504680733,"spend":119,"installs":279,"cpi":0.42652329749104}]}}
+ * {"code":0,"msg":"success","total":2,"data":{"list":[{"id":"1","name":"张三","address":"广州市天河区","age":40},{"id":"2","name":"李四","address":"上海浦东","age":28}]}}
  * 
  * @fields
  *  - total | 总数
- *  - list | Collection列表
- * @author yuanhuo.ning
- * @version v4.3.2
+ *  - list | 列表
+ * @author ningyuanhuo
+ * @version v1.0.0
  */
 public function getList()
 {
@@ -69,13 +69,18 @@ server {
     listen       80;
     server_name  doc.dev.com;
     index index.html index.php;
-    root  /usr/local/www/swagger;
-
-
+    root  /usr/local/www/swagger/web;
+    location /doc/ {
+       root           /usr/local/www/swagger;
+       try_files      $uri $uri/ /index.php?$args;
+       fastcgi_pass   127.0.0.1:9000;
+       include        fastcgi.conf;
+       fastcgi_index  index.php;
+       fastcgi_param  ENVIRONMENT dev_testing;
+    }
     location / {
        try_files $uri $uri/ /index.php$is_args$args;
     }
-
     location ~ \.php$ {
        fastcgi_pass   127.0.0.1:9000;
        fastcgi_index  index.php;
@@ -83,11 +88,12 @@ server {
        fastcgi_param  ENVIRONMENT    dev_testing;
        include        fastcgi.conf;
     }
-
     access_log  /usr/local/log/nginx/doc.dev.com_access.log;
     error_log  /usr/local/log/nginx/doc.dev.com.log;
 }
 </pre>
 
-**激动的时刻来了，访问url: http://doc.dev.com/doc/ 就可以看到效果了哦～～～～**
+****激动的时刻来了，先通过http://doc.dev.com/doc/生成文档，再访问url: http://doc.dev.com/swagger-ui/doc.html 就可以看到效果了哦～～～～****
+
+**注意：确保 web/swagger-ui/json/swagger_api.json文件有写的权限**
 </p>

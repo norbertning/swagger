@@ -19,27 +19,46 @@ class Car
      *
      * @http GET
      * @params
-     *  - id | int | 用户id |  1001 | Y
+     *  - id | int | id |  1 | Y
      * @response
-     * {"code":0,"msg":"success","rows":"https://s3-ap-southeast-1.amazonaws.com/mob-fb/development/sku/201802/fafa5efeaf3cbe3b23b2748d13"}
+     * {"code":0,"msg":"success","data":{"id":"1","name":"宝马","price":1000000}}
+     *
+     * @fields
+     *  - name | 名称
+     *  - price | 价格
+     *
      */
-    public function getDetail()
+    public function getCarInfo()
     {
 
     }
 
     /**
      * 新增
+     *
+     * @http POST
+     * @params
+     *  - name | string | 名称 |  宝马 | Y
+     *  - price | float | 价格 |  1000000 | Y
+     * @response
+     * {"code":0,"msg":"success","rows":"1"}
      */
-    public function add()
+    public function addCar()
     {
 
     }
 
     /**
      * 更新
+     *
+     * @http POST
+     * @params
+     *  - id | int | id |  1 | Y
+     *  - name | string | 名称 |  奔驰 | Y
+     * @response
+     * {"code":0,"msg":"success","rows":"1"}
      */
-    public function update()
+    public function updateCar()
     {
 
     }
