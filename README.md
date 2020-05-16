@@ -93,7 +93,7 @@ server {
 }
 </pre>
 
-****激动的时刻来了，先通过http://doc.dev.com/doc/生成文档，再访问url: http://doc.dev.com/swagger-ui/doc.html 就可以看到效果了哦～～～～****
+****激动人心的时刻来了，先通过http://doc.dev.com/doc/ 生成文档，再访问url: http://doc.dev.com/swagger-ui/doc.html 就可以看到效果了哦～～～～****
 
 **注意：确保 web/swagger-ui/json/swagger_api.json文件有写的权限**
 </p>

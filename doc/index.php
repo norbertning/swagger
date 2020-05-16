@@ -26,30 +26,33 @@ $classMap = getClassMap($controllerPath);
 if (empty($classMap)) {
     exit('class not exists.');
 }
+
+$fileList = [];
 foreach ($classMap as $className => $item) {
-    $items = [];
     if (is_array($item)) {
-        $items = array_merge($items, $item);
+        $fileList = array_merge($fileList, array_values($item));
     } else {
-        $items = array_merge($items, [$item]);
-    }
-    foreach ($items as $item) {
-        $doc = new SwaggerFileDoc($item);
-        $content = $doc->getHtml();
-        $paths = array_merge($paths, $content);
-        $tags[] = [
-            'name' => $className,
-            'description' => strtolower($className),
-        ];
+        array_push($fileList, $item);
     }
 }
 
+foreach ($fileList as $file) {
+    $doc = new SwaggerFileDoc($file);
+    $content = $doc->getHtml();
+    $paths = array_merge($paths, $content);
+
+    $fileArr = explode("/", $file);
+    $tags[] = [
+        'name' => substr($fileArr[count($fileArr) - 1], 0, -4),
+        'description' => strtolower(substr($file, strpos($file, 'controllers/') + strlen('controllers/'), -4)),
+    ];
+}
 
 $swaggerList["tags"] = $tags;
 $swaggerList["paths"] = $paths;
 
 // 生成swagger.json需要的格式，用于swagger-bootstrap-ui-front使用
-$result =  $swaggerList;
+$result = $swaggerList;
 unset($result['tags']);
 $myFile = fopen(BASE_PATH . "web/swagger-ui/json/swagger_api.json", "w");
 fwrite($myFile, json_encode($result));
