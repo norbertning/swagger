@@ -3,6 +3,13 @@ define('PROJECT_PATH', dirname(__DIR__));
 define('BASE_PATH', PROJECT_PATH . '/');
 define('EXT', '.php');
 
+// 增加环境判断，提高安全性。只有开发、开发测试、测试环境才能访问
+$evnList = ["development", "dev_testing", "testing"];
+$evn = $_SERVER['ENVIRONMENT'];
+if (!in_array($evn, $evnList)) {
+    exit('Access denied.');
+}
+
 require_once __DIR__ . '/inc/util.php';
 require_once __DIR__ . '/inc/SwaggerFileDoc.php';
 
