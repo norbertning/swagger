@@ -76,7 +76,7 @@ server {
        fastcgi_pass   127.0.0.1:9000;
        include        fastcgi.conf;
        fastcgi_index  index.php;
-       fastcgi_param  ENVIRONMENT dev_testing;
+       fastcgi_param  ENVIRONMENT development;
     }
     location / {
        try_files $uri $uri/ /index.php$is_args$args;
@@ -85,7 +85,7 @@ server {
        fastcgi_pass   127.0.0.1:9000;
        fastcgi_index  index.php;
        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-       fastcgi_param  ENVIRONMENT    dev_testing;
+       fastcgi_param  ENVIRONMENT    development;
        include        fastcgi.conf;
     }
     access_log  /usr/local/log/nginx/doc.dev.com_access.log;
@@ -95,5 +95,5 @@ server {
 
 ****激动人心的时刻来了，先通过http://doc.dev.com/doc/ 生成文档，再访问url: http://doc.dev.com/swagger-ui/doc.html 就可以看到效果了哦～～～～****
 
-**注意：确保 web/swagger-ui/json/swagger_api.json文件有写的权限**
+**注意：确保 web/swagger-ui/json/swagger_api.json文件有写的权限，以及nginx需要配置ENVIRONMENT变量**
 </p>
